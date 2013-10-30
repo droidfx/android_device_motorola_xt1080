@@ -30,6 +30,14 @@ PRODUCT_LOCALES += xhdpi
 PRODUCT_AAPT_CONFIG := normal hdpi xhdpi
 PRODUCT_AAPT_PREF_CONFIG := xhdpi
 
+# IDC
+PRODUCT_COPY_FILES += \
+	$(LOCAL_PATH)/idc/synaptics_dsx_i2c.idc:system/usr/idc/synaptics_dsx_i2c.idc
+
+# Keylayout
+PRODUCT_COPY_FILES += \
+	$(LOCAL_PATH)/keylayout/synaptics_dsx_i2c.kl:system/usr/keylayout/synaptics_dsx_i2c.kl
+
 # Telephony
 PRODUCT_PROPERTY_OVERRIDES += \
 	telephony.lteOnCdmaDevice=1 \

@@ -23,7 +23,7 @@ $(call inherit-product, device/motorola/msm8960dt-common/msm8960dt.mk)
 LOCAL_PATH := device/motorola/xt1080
 
 # xt1080 specific overlay
-DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
+PRODUCT_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
 PRODUCT_LOCALES := en_US
 PRODUCT_LOCALES += xhdpi

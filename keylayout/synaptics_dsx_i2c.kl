@@ -18,4 +18,4 @@
 
 key 59    BACK          VIRTUAL
 key 60    HOME          VIRTUAL
-key 61    TASK          VIRTUAL
+key 61    APP_SWITCH    VIRTUAL

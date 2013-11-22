@@ -42,7 +42,7 @@ static struct light_state_t g_battery;
 static int g_attention;
 static int g_charge_led_active;
 static int g_lcd_brightness;
-static int g_button_brightness;
+static int g_button_on;
 
 /* LED */
 char const*const RED_BLINK_FILE = "/sys/class/leds/red/blink";
@@ -65,7 +65,7 @@ void init_globals(void)
 
         g_charge_led_active = 0;
         g_lcd_brightness = -1;
-        g_button_brightness = -1;
+        g_button_on = -1;
         g_attention = -1;
 }
 
@@ -144,7 +144,10 @@ set_light_backlight(struct light_device_t* dev,
         if (g_lcd_brightness < 0 ||
             (g_lcd_brightness != lcd_brightness))
         {
-                err = write_int(LCD_FILE, lcd_brightness);
+                // Hack - maximum is only 127
+                err = write_int(LCD_FILE, lcd_brightness >> 1);
+                if (!err && g_button_on > 0)
+                        err = write_int(BUTTON_FILE, lcd_brightness);
         }
 
         g_lcd_brightness = lcd_brightness;
@@ -236,17 +239,18 @@ set_light_buttons(struct light_device_t* dev,
         struct light_state_t const* state)
 {
     int err = 0;
-    int brightness = rgb_to_brightness(state);
+    int on = rgb_to_brightness(state) > 0;
 
     pthread_mutex_lock(&g_lock);
 
-    if (g_button_brightness < 0 ||
-        (g_button_brightness != 0 && brightness > 0))
+    if (g_button_on < 0 ||
+        (!g_button_on && on > 0) ||
+        (g_button_on > 0 && !on))
     {
-        err = write_int(BUTTON_FILE, brightness);
+        err = write_int(BUTTON_FILE, on ? g_lcd_brightness : 0);
     }
 
-    g_button_brightness = brightness;
+    g_button_on = on;
 
     pthread_mutex_unlock(&g_lock);
 

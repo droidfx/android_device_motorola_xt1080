@@ -36,9 +36,6 @@
 static pthread_once_t g_init = PTHREAD_ONCE_INIT;
 static pthread_mutex_t g_lock = PTHREAD_MUTEX_INITIALIZER;
 
-static struct light_state_t g_notification;
-static struct light_state_t g_battery;
-
 static int g_lcd_brightness;
 static int g_button_on;
 
@@ -54,9 +51,6 @@ void init_globals(void)
 {
         // init the mutex
         pthread_mutex_init(&g_lock, NULL);
-
-        memset(&g_battery, 0, sizeof(g_battery));
-        memset(&g_notification, 0, sizeof(g_notification));
 
         g_lcd_brightness = -1;
         g_button_on = -1;

@@ -39,8 +39,6 @@ static pthread_mutex_t g_lock = PTHREAD_MUTEX_INITIALIZER;
 static struct light_state_t g_notification;
 static struct light_state_t g_battery;
 
-static int g_attention;
-static int g_charge_led_active;
 static int g_lcd_brightness;
 static int g_button_on;
 
@@ -60,10 +58,8 @@ void init_globals(void)
         memset(&g_battery, 0, sizeof(g_battery));
         memset(&g_notification, 0, sizeof(g_notification));
 
-        g_charge_led_active = 0;
         g_lcd_brightness = -1;
         g_button_on = -1;
-        g_attention = -1;
 }
 
 static int
@@ -117,12 +113,6 @@ write_str(char const *path, const char* value)
 }
 
 static int
-is_lit(struct light_state_t const* state)
-{
-        return state->color & 0x00ffffff;
-}
-
-static int
 rgb_to_brightness(struct light_state_t const* state)
 {
         int color = state->color & 0x00ffffff;
@@ -153,7 +143,6 @@ set_light_backlight(struct light_device_t* dev,
 
         return err;
 }
-
 
 static int
 set_light_buttons(struct light_device_t* dev,

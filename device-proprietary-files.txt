@@ -1,3 +1,19 @@
 # proprietary file list
 # bin/filename
 
+# XT1080 specific
+bin/ap_gain.bin
+bin/ap_gain_mmul.bin
+
+etc/firmware/VRGain.bin
+etc/firmware/tfa9890.config
+etc/firmware/tfa9890.speaker
+etc/firmware/tfa9890.eq
+etc/firmware/tfa9890_music_table.preset
+etc/firmware/tfa9890_n1b12.patch
+etc/firmware/tfa9890_n1c2.patch
+etc/firmware/tfa9890_ringtone_table.preset
+etc/firmware/tfa9890_voice_table.preset
+
+lib/libacdbdata.so
+lib/libaudcal.so
